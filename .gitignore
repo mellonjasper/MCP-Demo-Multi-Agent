@@ -1,0 +1,38 @@
+# .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Docker
+**/publish/
+**/Dockerfile.*.backup
+
+# Secrets
+secrets.json
+appsettings.*.local.json
+.env
+.env.*
+
+# Logs
+*.log
+logs/
+
+# Test results
+TestResults/
+
+# N8N data
+n8n_data/
