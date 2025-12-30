@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
-COPY Api Api/
-COPY Domain Domain/
+COPY Api/Api.csproj Api/
+COPY Domain/Domain.csproj Domain/
 RUN dotnet restore Api/Api.csproj
 COPY . .
 WORKDIR /src/Api

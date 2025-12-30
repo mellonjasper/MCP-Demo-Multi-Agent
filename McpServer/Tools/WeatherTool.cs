@@ -15,6 +15,6 @@ public class WeatherTool
     
     [McpServerTool]
     [Description("Get weather for a specified city.")]
-    public WeatherResult Get([Description("City name")]string city)
+    public WeatherResult GetWeatherForCity([Description("City name")]string city)
         => _service.GetWeather(city);
 }

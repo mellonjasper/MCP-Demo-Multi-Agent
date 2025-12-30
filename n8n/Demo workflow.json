@@ -1,0 +1,124 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an autonomous assistant. If a user asks for multiple things (e.g., 'calculate this AND check weather'), you MUST call ALL necessary tools to answer the full request. Do not stop after the first tool. You can call multiple tools in parallel or in sequence."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        160,
+        0
+      ],
+      "id": "ac3ba27d-cfe7-4666-a1ab-d2352c6ac324",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://mcp-csharp:8080/sse",
+        "serverTransport": "sse",
+        "include": "selected",
+        "includeTools": [
+          "generate_weather_summary",
+          "get_random_number",
+          "get_weather_for_city",
+          "add_two_numbers"
+        ],
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        296,
+        224
+      ],
+      "id": "eb4ee180-cf35-493c-8dd3-3da54ca57c98",
+      "name": "MCP Client1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "46ddbef3-ed3d-4c53-aebe-d5cb9c27ca8f",
+      "name": "When chat message received",
+      "webhookId": "57fbd30a-fa22-4ff1-b331-d25a5232877b"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        168,
+        224
+      ],
+      "id": "47c8c67c-4ace-4722-85fa-637a69e4c6b6",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "ooFfcQiBdShwbPSS",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "MCP Client1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "4abf737a-d449-41a2-92a6-951d888b320f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "33d3118021c86740b1a15c617d0d9d55d063df19d7374e00a1b8953c3734f20d"
+  },
+  "id": "aGXa5NXc6MTaT9aU",
+  "tags": []
+}

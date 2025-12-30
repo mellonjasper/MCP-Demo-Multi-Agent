@@ -1,29 +1,34 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Server;
+// 1. Ensure you have this namespace (if available in your IDE options)
+using ModelContextProtocol.AspNetCore; 
 using Domain.Services;
 using McpServer.Tools;
 
-var builder = Host.CreateApplicationBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-// Configure all logs to go to stderr (stdout is used for the MCP protocol messages).
-builder.Logging.AddConsole(o => o.LogToStandardErrorThreshold = LogLevel.Trace);
+// 2. Register Domain Services
+builder.Services.AddSingleton<CalculatorService>();
+builder.Services.AddSingleton<WeatherService>();
+builder.Services.AddSingleton<ReportService>();
 
-// Add the MCP services: the transport to use (stdio) and the tools to register.
-
-builder.Services
-    .AddMcpServer()
-    .WithStdioServerTransport()
+// 3. Register MCP Server
+// In 0.5.0-preview, "WithHttpTransport" enables SSE + POST support.
+builder.Services.AddMcpServer()
+    .WithHttpTransport() // <--- Replaces WithSseServerTransport / AddAspNetCore
     .WithTools<WeatherTool>()
     .WithTools<CalculatorTool>()
     .WithTools<RandomNumberTools>()
     .WithTools<ReportTool>();
 
-    
-builder.Services.AddSingleton<CalculatorService>();
-builder.Services.AddSingleton<WeatherService>();
-builder.Services.AddSingleton<ReportService>();
+var app = builder.Build();
 
+app.UseRouting();
 
-await builder.Build().RunAsync();
+// 4. Map the Endpoints
+// In 0.5.0-preview, this single line maps the endpoints (defaults to /mcp)
+app.MapMcp(); 
+
+app.Run();

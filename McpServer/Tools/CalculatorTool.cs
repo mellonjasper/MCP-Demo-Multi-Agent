@@ -15,5 +15,5 @@ public class CalculatorTool
 
     [McpServerTool]
     [Description("Add two numbers")]
-    public int Add([Description("First number")]int a, [Description("Second number")]int b) => _service.Add(a, b);
+    public int AddTwoNumbers([Description("First number")]int a, [Description("Second number")]int b) => _service.Add(a, b);
 }

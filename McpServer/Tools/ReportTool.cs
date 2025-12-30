@@ -15,6 +15,6 @@ public class ReportTool
 
     [McpServerTool]
     [Description("Generate a weather summary report for a specified city.")]
-    public string Generate([Description("City name")]string city)
+    public string GenerateWeatherSummary([Description("City name")]string city)
         => _service.GenerateWeatherSummary(city);
 }
