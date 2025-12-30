@@ -113,4 +113,4 @@ Open n8n in your browser at http://localhost:5678/.
 
 If the project is properly configured you should see the n8n setup shown below:
 
-![n8n setup](n8n/N8N.PNG)
+![n8n setup](/n8n/n8n.png)
