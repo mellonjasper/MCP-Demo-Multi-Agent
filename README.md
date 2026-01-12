@@ -111,6 +111,14 @@ To add the MCP client in n8n, use the SSE URL: http://mcp-csharp:8080/sse and se
 
 Open n8n in your browser at http://localhost:5678/.
 
+To login user the following:
+email: test@test.test
+password: Test1234
+
 If the project is properly configured you should see the n8n setup shown below:
 
 ![n8n setup](/n8n/n8n.png)
+
+
+
+

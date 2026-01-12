@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<CalculatorService>();
 builder.Services.AddSingleton<WeatherService>();
 builder.Services.AddSingleton<ReportService>();
+builder.Services.AddSingleton<BankService>();
 
 var app = builder.Build();
 

@@ -14,6 +14,7 @@ builder.Services.AddSingleton<CalculatorService>();
 builder.Services.AddSingleton<WeatherService>();
 builder.Services.AddSingleton<ReportService>();
 builder.Services.AddSingleton<InventoryService>();
+builder.Services.AddSingleton<BankService>();
 
 // 3. Register MCP Server
 // In 0.5.0-preview, "WithHttpTransport" enables SSE + POST support.
@@ -23,6 +24,7 @@ builder.Services.AddMcpServer()
     .WithTools<CalculatorTool>()
     .WithTools<RandomNumberTools>()
     .WithTools<ReportTool>()
+    .WithTools<BankTool>()
     .WithTools<InventoryTool>();
 
 var app = builder.Build();
