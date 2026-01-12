@@ -74,16 +74,6 @@ Local runs are convenient while developing; Docker provides a more production-li
 3. Set the API base URL in any HTTP nodes to the running API address (for Docker compose use the service name/port, otherwise `http://localhost:<port>`).
 4. Activate or trigger the workflow to test end-to-end interactions.
 
-## Configuration and environment variables
-- Inspect `Api/appsettings.json` and `McpServer/appsettings.json` for settings and ports.
-- `docker-compose.yml` may reference environment variables; consider creating a `.env` at the project root for local compose overrides.
-
-Suggested `.env` entries (example):
-
-```
-# API_URL=http://localhost:5000
-# GROQ_API_KEY=your-groq-key-here
-```
 
 ## Troubleshooting
 - If `docker compose up --build` fails, run:
@@ -99,11 +89,6 @@ Suggested `.env` entries (example):
 - MCP server: `McpServer/` (entrypoint `Program.cs`)
 - Tools used by MCP server: `Tools/`
 - n8n workflow export: `n8n/Demo workflow.json`
-
-## Next steps (optional)
-- Add a `.env.example` with the required environment variables.
-- Add small helper scripts in the repo root to run Docker Compose or start services locally.
-- Wire a CI job to build and smoke-test the compose stack.
 
 ## n8n MCP client setup
 
