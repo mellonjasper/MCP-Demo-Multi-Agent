@@ -1,0 +1,206 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5afa5a7b-ebbd-4d18-9ddb-b8dd52db079c",
+      "name": "When chat message received",
+      "webhookId": "49885e79-3488-449d-a327-74e9c564c605"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "9df3501c-a5a0-4626-ae24-330101d77c68",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "zi0CU8Jan5jdowZP",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "b78257f8-b865-48f5-b0e7-281ce1808112",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        544,
+        400
+      ],
+      "id": "aca78db1-f9e7-4543-aa71-ec1002b9500c",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "zi0CU8Jan5jdowZP",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        752,
+        432
+      ],
+      "id": "d4252e2a-2976-457a-a3b3-179b7120b7a5",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "xFbcvMsaNN5Ln4Ou",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "You are a city research specialist. Your output will be consumed by an analysis agent.\nProvide structured, concise summaries focusing on:\n1. Key facts (bullet points)\n2. Data sources (with reliability scores)\n3. Confidence level (0-1)\nAvoid verbose explanations. Be direct and factual.",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        544,
+        192
+      ],
+      "id": "a187a0ba-3c9b-47b5-a451-c0856315b8ce",
+      "name": "City researcher"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an analyst for planning trips.\n\nAnalyze each customer request and delegate to the appropriate tools.\n\nAlways confirm you've addressed the customer's complete request before ending."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fc18479b-2133-45d9-97d5-1d7c1d5de1c1",
+      "name": "Analist",
+      "alwaysOutputData": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Analist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Analist",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Analist",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "City researcher",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "City researcher",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "City researcher": {
+      "ai_tool": [
+        [
+          {
+            "node": "Analist",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analist": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "6ccd5431-877a-4381-948e-d7b40604caf9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "da85ed8e13213172501cc2c1137a95f82373e4988a89c5f16e147d28039ea765"
+  },
+  "id": "0IZHx21B1oP0un-pTHhAj",
+  "tags": []
+}
